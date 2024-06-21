@@ -24,6 +24,8 @@ public class ATM {
     private double bakiye = 100;
     static String kartNo = "1234567890";
     static String pass = "1234";
+    static String senderIBAN;
+    static String receiverIBAN;
     Scanner scanner = new Scanner(System.in);
 
 
@@ -77,7 +79,7 @@ public class ATM {
                 paraGonderme();
                 break;
             case 5:
-                String  newPass = scanner.nextLine();
+                String newPass = scanner.nextLine();
                 sifreDegistirme(newPass);
                 break;
             case 6:
@@ -124,8 +126,30 @@ public class ATM {
 
     public void paraGonderme() {
 
+        System.out.println("Gonderilmek istene miktar: ");
+        double gonderilenParaMiktari = scanner.nextDouble();
+
+        if (gonderilenParaMiktari <= bakiye) {
+            bakiye -= gonderilenParaMiktari;
+
+            System.out.println("Please enter sender IBAN: ");
+            senderIBAN = scanner.next(); // Use next() for single word input
+            scanner.nextLine(); // Consume the newline character left by next()
+
+            System.out.println("Please enter receiver IBAN: ");
+            receiverIBAN = scanner.nextLine();
+
+            System.out.println("para " + senderIBAN + "`dan " + receiverIBAN + "`a gonderildi");
+            bakiyeSorgulama();
+
+        } else {
+
+            System.out.println("yetersiz bakiye");
+            bakiyeSorgulama();
+        }
 
     }
+
 
     public void sifreDegistirme(String newPass) {
         System.out.println("suanki passwordu girin");
